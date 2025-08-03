@@ -10,6 +10,7 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // Endpoint to generate MCQs
 app.post('/mcq-generator', async (c) => {
+    console.log(c)
     const ai = new GoogleGenAI({
         apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
     });
