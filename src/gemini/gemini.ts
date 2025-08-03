@@ -23,9 +23,10 @@ app.post('/mcq-generator', async (c) => {
         contents: [
             {
                 text: `
-                    You're an expert in this context: ${context}. 
+                    You're an expert in this topic: ${context}. 
                     Generate 10 multiple-choice questions (MCQs) with 4 options each and their point values.
                     Provide the correct answer for each question.
+                    Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
                         "questions": [
@@ -74,6 +75,7 @@ app.post('/essay-generator', async (c) => {
                 text: `
                     You're an expert in this context: ${context}. 
                     Generate 5 essays questions on this topic.
+                    Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
                         "essays": [
