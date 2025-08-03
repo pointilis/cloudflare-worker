@@ -27,6 +27,7 @@ app.post('/mcq-generator', async (c) => {
                     Generate 10 multiple-choice questions (MCQs) with 4 options each and their point values.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
+                    Generate random for point values between 1 and 5 for each option.
                     Format the response use JSON as follows:
                     {
                         "questions": [
