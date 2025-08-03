@@ -7,12 +7,14 @@ type Bindings = {
     GOOGLE_GENAI_API_KEY: string;
 };
 
+console.log("Google GenAI API Key:", process.env.GOOGLE_GENAI_API_KEY);
+
 const app = new Hono<{ Bindings: Bindings }>();
 const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
 });
 
-console.log("Google GenAI API Key:", process.env.GOOGLE_GENAI_API_KEY);
+
 
 // Endpoint to generate MCQs
 app.post('/mcq-generator', async (c) => {
