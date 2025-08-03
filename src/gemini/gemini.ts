@@ -57,7 +57,7 @@ app.post('/mcq-generator', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'MCQs generated successfully', questions: jsonResponse });
+    return c.json({ message: 'MCQs generated successfully', questions: jsonResponse.questions });
 });
 
 // Essay generation endpoint
@@ -99,7 +99,7 @@ app.post('/essay-generator', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Essay generated successfully', essay: jsonResponse });
+    return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
 });
 
 export default app;
