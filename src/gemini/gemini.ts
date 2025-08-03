@@ -27,7 +27,7 @@ app.post('/mcq-generator', async (c) => {
                     Generate 10 multiple-choice questions (MCQs) with 4 options each and their point values.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
-                    Generate random for point values between 1 and 5 for each option.
+                    Generate random for pointValue between 1 and 5 for each option.
                     Format the response use JSON as follows:
                     {
                         "questions": [
@@ -35,9 +35,9 @@ app.post('/mcq-generator', async (c) => {
                                 "question": "What is the capital of France?",
                                 "options": [
                                     {"id": "A", "value": "Berlin", "pointValue": 1},
-                                    {"id": "B", "value": "Madrid", "pointValue": 3},
-                                    {"id": "C", "value": "Paris", "pointValue": 2},
-                                    {"id": "D", "value": "Rome", "pointValue": 5}
+                                    {"id": "B", "value": "Madrid", "pointValue": 1},
+                                    {"id": "C", "value": "Paris", "pointValue": 1},
+                                    {"id": "D", "value": "Rome", "pointValue": 1}
                                 ],
                                 "answer": "C"
                             },
