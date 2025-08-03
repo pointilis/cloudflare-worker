@@ -1,23 +1,19 @@
 import { Hono } from "hono";
 import { GoogleGenAI } from "@google/genai";
 import { extractJsonFromResponse } from "../helpers";
-import * as process from 'node:process';
 
 type Bindings = {
     GOOGLE_GENAI_API_KEY: string;
 };
 
-console.log("Google GenAI API Key:", process.env.GOOGLE_GENAI_API_KEY);
-
 const app = new Hono<{ Bindings: Bindings }>();
-const ai = new GoogleGenAI({
-    apiKey: process.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
-});
-
-
 
 // Endpoint to generate MCQs
 app.post('/mcq-generator', async (c) => {
+    const ai = new GoogleGenAI({
+        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+    });
+
     const body = await c.req.json();
     const { context } = body;
     const response = await ai.models.generateContent({
@@ -63,6 +59,10 @@ app.post('/mcq-generator', async (c) => {
 
 // Essay generation endpoint
 app.post('/essay-generator', async (c) => {
+    const ai = new GoogleGenAI({
+        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+    });
+    
     const body = await c.req.json();
     const { context } = body;
     const response = await ai.models.generateContent({
