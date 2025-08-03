@@ -1,6 +1,7 @@
 import { Hono } from "hono";
 import { GoogleGenAI } from "@google/genai";
 import { extractJsonFromResponse } from "../helpers";
+import * as process from 'node:process';
 
 type Bindings = {
     GOOGLE_GENAI_API_KEY: string;

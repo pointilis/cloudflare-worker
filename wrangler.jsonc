@@ -2,7 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cloudflare-worker",
   "main": "src/index.ts",
-  "compatibility_date": "2025-08-02"
+  "compatibility_date": "2025-08-02",
+  "compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"]
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
