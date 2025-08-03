@@ -7,9 +7,9 @@
   // "compatibility_flags": [
   //   "nodejs_compat"
   // ],
-  // "vars": {
-  //   "MY_VAR": "my-variable"
-  // },
+  "vars": {
+    "GOOGLE_GENAI_API_KEY": "AIzaSyDX1uWD3tvf1isDRHcQu1_p6U_7IgiIri4"
+  },
   // "kv_namespaces": [
   //   {
   //     "binding": "MY_KV_NAMESPACE",
