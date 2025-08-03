@@ -12,6 +12,8 @@ const ai = new GoogleGenAI({
     apiKey: process.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
 });
 
+console.log("Google GenAI API Key:", process.env.GOOGLE_GENAI_API_KEY);
+
 // Endpoint to generate MCQs
 app.post('/mcq-generator', async (c) => {
     const body = await c.req.json();
