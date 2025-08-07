@@ -119,13 +119,13 @@ app.post('/essay-scoring', async (c) => {
                     You're is judging essays. 
                     Analyzing this question and answer then provide a score from 1 to 10.
                     Result format same as json below but add score key.
-                    ${context}
+                    ${JSON.stringify(context)}
                 `,
             },
         ]
     });
 
-    console.log(context);
+    console.log(JSON.stringify(context));
 
     const aiResponse = response.text;  
     if (!aiResponse) {
