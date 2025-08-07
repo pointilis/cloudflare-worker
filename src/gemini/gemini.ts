@@ -125,21 +125,17 @@ app.post('/essay-scoring', async (c) => {
         ]
     });
 
-    console.log(JSON.stringify(context));
-
     const aiResponse = response.text;  
     if (!aiResponse) {
         return c.json({ error: 'No response from AI' }, 500);
     }
-
-    console.log(aiResponse);
 
     const jsonResponse = extractJsonFromResponse(aiResponse);
     if (!jsonResponse) {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Essay scoring successfully', essay: jsonResponse.essays });
+    return c.json({ message: 'Essay scoring successfully', results: jsonResponse });
 });
 
 export default app;
