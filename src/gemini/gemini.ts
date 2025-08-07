@@ -130,6 +130,8 @@ app.post('/essay-scoring', async (c) => {
         return c.json({ error: 'No response from AI' }, 500);
     }
 
+    console.log(aiResponse);
+
     const jsonResponse = extractJsonFromResponse(aiResponse);
     if (!jsonResponse) {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
