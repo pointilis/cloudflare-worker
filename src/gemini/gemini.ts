@@ -102,4 +102,43 @@ app.post('/essay-generator', async (c) => {
     return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
 });
 
+
+// Essay scoring endpoint
+app.post('/essay-scoring', async (c) => {
+    const ai = new GoogleGenAI({
+        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+    });
+    
+    const body = await c.req.json();
+    const { context } = body;
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: [
+            {
+                text: `
+                    You're is judging essays. 
+                    Analyzing this question and answer then provide a score from 1 to 10.
+                    Result format same as json below but add score key.
+
+                    '''JSON
+                    ${context}
+                    '''
+                `,
+            },
+        ]
+    });
+
+    const aiResponse = response.text;  
+    if (!aiResponse) {
+        return c.json({ error: 'No response from AI' }, 500);
+    }
+
+    const jsonResponse = extractJsonFromResponse(aiResponse);
+    if (!jsonResponse) {
+        return c.json({ error: 'Invalid JSON response from AI' }, 500);
+    }
+
+    return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
+});
+
 export default app;
