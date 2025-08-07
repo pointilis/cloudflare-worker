@@ -119,10 +119,7 @@ app.post('/essay-scoring', async (c) => {
                     You're is judging essays. 
                     Analyzing this question and answer then provide a score from 1 to 10.
                     Result format same as json below but add score key.
-
-                    '''JSON
                     ${context}
-                    '''
                 `,
             },
         ]
@@ -138,7 +135,7 @@ app.post('/essay-scoring', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
+    return c.json({ message: 'Essay scoring successfully', essay: jsonResponse.essays });
 });
 
 export default app;
