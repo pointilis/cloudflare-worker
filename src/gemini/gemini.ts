@@ -125,6 +125,8 @@ app.post('/essay-scoring', async (c) => {
         ]
     });
 
+    console.log(context);
+
     const aiResponse = response.text;  
     if (!aiResponse) {
         return c.json({ error: 'No response from AI' }, 500);
