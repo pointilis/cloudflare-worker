@@ -26,7 +26,7 @@ app.post('/mcq-generator', async (c) => {
                     Generate 10 multiple-choice questions (MCQs) with 4 options each and their point values.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
-                    Give points to each question options based on the level of difficulty, the points range is 1 - 10 and store points to key 'pointValue'.
+                    Give points to each questions based on the level of difficulty, the points range is 1 - 10 and store points to key 'pointValue'.
                     Format the response use JSON as follows:
                     {
                         "questions": [
@@ -38,6 +38,7 @@ app.post('/mcq-generator', async (c) => {
                                     {"id": "C", "value": "Paris", "pointValue": 1},
                                     {"id": "D", "value": "Rome", "pointValue": 1}
                                 ],
+                                "pointValue": 5,
                                 "answer": "C"
                             },
                         ]
