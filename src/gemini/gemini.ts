@@ -33,10 +33,10 @@ app.post('/mcq-generator', async (c) => {
                             {
                                 "question": "What is the capital of France?",
                                 "options": [
-                                    {"id": "A", "value": "Berlin", "pointValue": 1},
-                                    {"id": "B", "value": "Madrid", "pointValue": 1},
-                                    {"id": "C", "value": "Paris", "pointValue": 1},
-                                    {"id": "D", "value": "Rome", "pointValue": 1}
+                                    {"id": "A", "value": "Berlin"},
+                                    {"id": "B", "value": "Madrid"},
+                                    {"id": "C", "value": "Paris"},
+                                    {"id": "D", "value": "Rome"}
                                 ],
                                 "pointValue": 5,
                                 "answer": "C"
