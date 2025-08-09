@@ -23,7 +23,8 @@ app.post('/mcq-generator', async (c) => {
             {
                 text: `
                     You're an expert in this topic: ${context}. 
-                    Generate 10 multiple-choice questions (MCQs) with 4 options each and their point values.
+                    Generate 20 multiple-choice questions (MCQs) with 4 options each and their point values.
+                    Max one sentence each questions.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
                     Give points to each questions based on the level of difficulty, the points range is 1 - 10 and store points to key 'pointValue'.
