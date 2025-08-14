@@ -78,7 +78,7 @@ app.post('/essay-generator', async (c) => {
             {
                 text: `
                     You're an expert in this context: ${context}. 
-                    Generate 5 essays questions on this topic with one sentence max for each question.
+                    Generate ONLY 5 essay questions on this topic with one sentence max for each question.
                     Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {

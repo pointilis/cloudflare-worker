@@ -1,6 +1,5 @@
 import { Hono } from 'hono'
 import gemini from './gemini/gemini'
-import storage from './storage/storage'
 import { cors } from 'hono/cors';
 
 const app = new Hono()
@@ -15,6 +14,5 @@ app.get('/', (c) => {
 });
 
 app.route('/api/gemini', gemini);
-app.route('/api/storage', storage);
 
 export default app
