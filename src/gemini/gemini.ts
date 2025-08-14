@@ -4,6 +4,7 @@ import { extractJsonFromResponse } from "../helpers";
 
 type Bindings = {
     GOOGLE_GENAI_API_KEY: string;
+    GOOGLE_SERVICE_ACCOUNT: string;
 };
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -28,6 +29,7 @@ app.post('/mcq-generator', async (c) => {
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
                     Give points to each questions based on the level of difficulty, the points range is 1 - 10 and store points to key 'pointValue'.
+                    Make sure the correct answer randomize its position in the options.
                     Format the response use JSON as follows:
                     {
                         "questions": [
