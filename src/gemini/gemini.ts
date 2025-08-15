@@ -106,7 +106,6 @@ app.post('/essay-generator', async (c) => {
     return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
 });
 
-
 // Essay scoring endpoint
 app.post('/essay-scoring', async (c) => {
     const ai = new GoogleGenAI({
@@ -140,6 +139,49 @@ app.post('/essay-scoring', async (c) => {
     }
 
     return c.json({ message: 'Essay scoring successfully', results: jsonResponse });
+});
+
+// Endpoint to generate Todos
+app.post('/todos-generator', async (c) => {
+    console.log(c.env)
+    const ai = new GoogleGenAI({
+        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+    });
+
+    const body = await c.req.json();
+    const { context } = body;
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: [
+            {
+                text: `
+                    You're an expert in this topic: ${context}. 
+                    Generate top 15 important todo items.
+                    Response must use same language as the topic.
+                    Format the response use JSON as follows:
+                    {
+                        "todos": [
+                            {
+                                "task": "What is the capital of France?",
+                            },
+                        ]
+                    }
+                `,
+            },
+        ]
+    });
+
+    const aiResponse = response.text;
+    if (!aiResponse) {
+        return c.json({ error: 'No response from AI' }, 500);
+    }
+
+    const jsonResponse = extractJsonFromResponse(aiResponse);
+    if (!jsonResponse) {
+        return c.json({ error: 'Invalid JSON response from AI' }, 500);
+    }
+
+    return c.json({ message: 'Todos generated successfully', todos: jsonResponse.todos });
 });
 
 export default app;
