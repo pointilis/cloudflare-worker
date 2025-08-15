@@ -156,7 +156,7 @@ app.post('/todos-generator', async (c) => {
             {
                 text: `
                     You're an expert in this topic: ${context}. 
-                    Generate top 15 important todo items.
+                    Make todo list for beginners from the topic.
                     Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
