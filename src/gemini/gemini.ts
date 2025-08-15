@@ -155,7 +155,7 @@ app.post('/todos-generator', async (c) => {
         contents: [
             {
                 text: `
-                    Make todo list for beginner from topic: ${context}. 
+                    Make 15 todo list for beginner from topic: ${context}. 
                     Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
