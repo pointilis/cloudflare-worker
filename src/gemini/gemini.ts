@@ -78,11 +78,11 @@ app.post('/essay-generator', async (c) => {
             {
                 text: `
                     You're an expert in this context: ${context}. 
-                    Generate ONLY 5 essay questions on this topic with one sentence max for each question.
+                    Generate ONLY 5 open ended questions on this topic with one sentence max for each question.
                     Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
-                        "essays": [
+                        "results": [
                             {
                                 "question": "What is the capital of France?",
                             },
@@ -103,7 +103,7 @@ app.post('/essay-generator', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Essay generated successfully', essay: jsonResponse.essays });
+    return c.json({ message: 'Open ended questions generated successfully', results: jsonResponse.results });
 });
 
 // Essay scoring endpoint
@@ -119,7 +119,7 @@ app.post('/essay-scoring', async (c) => {
         contents: [
             {
                 text: `
-                    You're is judging essays. 
+                    You're is judging on open ended question. 
                     Analyzing this question and answer then provide a score from 1 to 10.
                     Result format same as json below but add score key.
                     ${JSON.stringify(context)}
@@ -138,7 +138,7 @@ app.post('/essay-scoring', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Essay scoring successfully', results: jsonResponse });
+    return c.json({ message: 'Open ended questions scoring successfully', results: jsonResponse });
 });
 
 // Endpoint to generate Todos
