@@ -24,7 +24,7 @@ app.post('/mcq-generator', async (c) => {
             {
                 text: `
                     You're an expert in this topic: ${context}. 
-                    Generate 20 multiple-choice questions (MCQs) with 4 options each and their point values.
+                    Generate 20 multi-choice question with 4 options each and their point values.
                     Max one sentence each questions.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
