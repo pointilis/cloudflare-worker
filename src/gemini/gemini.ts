@@ -17,14 +17,14 @@ app.post('/mcq-generator', async (c) => {
     });
 
     const body = await c.req.json();
-    const { context } = body;
+    const { context, difficulty, lesson, num, user } = body;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
                     You're an expert in this topic: ${context}. 
-                    Generate 20 multi-choice question with 4 options each and their point values.
+                    Generate ${num} multi-choice question for ${difficulty} level with 4 options each and their point values.
                     Max one sentence each questions.
                     Provide the correct answer for each question.
                     Response must use same language as the topic.
@@ -71,14 +71,14 @@ app.post('/essay-generator', async (c) => {
     });
     
     const body = await c.req.json();
-    const { context } = body;
+    const { context, difficulty, lesson, num, user  } = body;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
-                    You're an expert in this context: ${context}. 
-                    Generate ONLY 5 open ended questions on this topic with one sentence max for each question.
+                    You're an expert in this topic: ${context}. 
+                    Generate ${num} open ended questions for ${difficulty} level based on this topic with one sentence max for each question.
                     Response must use same language as the topic.
                     Format the response use JSON as follows:
                     {
