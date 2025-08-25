@@ -23,14 +23,20 @@ app.post('/mcq-generator', async (c) => {
         contents: [
             {
                 text: `
-                    You're an expert in this topic: ${context}. 
-                    Generate ${num} multi-choice question for ${difficulty} level with 4 options each and their point values.
-                    Max one sentence each questions.
-                    Provide the correct answer for each question.
-                    Response must use same language as the topic.
-                    Give points to each questions based on the level of difficulty, the points range is 1 - 10 and store points to key 'pointValue'.
-                    Make sure the correct answer randomize its position in the options.
-                    Format the response use JSON as follows:
+                    Create a ${num}-question multiple-choice quiz on the topic of **${context}**.
+
+                    Requirements:
+                    - Difficulty level: ${difficulty}.
+                    - Each question must have 1 correct answer and 3 incorrect but plausible distractors.
+                    - Vary the subtopics: (search on internet today top news).
+                    - Avoid repetition in the questions.
+                    - Phrase each question clearly and concisely.
+                    - Give each question a point value from 1 to 10.
+                    - Make sure the correct answer randomize it's position in the options.
+                    - Language must same as the topic.
+
+
+                    Output format use JSON as follows:
                     {
                         "questions": [
                             {
@@ -77,10 +83,16 @@ app.post('/essay-generator', async (c) => {
         contents: [
             {
                 text: `
-                    You're an expert in this topic: ${context}. 
-                    Generate ${num} open ended questions for ${difficulty} level based on this topic with one sentence max for each question.
-                    Response must use same language as the topic.
-                    Format the response use JSON as follows:
+                    Create a ${num}-question open-ended quiz on the topic of **${context}**.
+
+                    Requirements:
+                    - Difficulty level: ${difficulty}.
+                    - Vary the subtopics: (search on internet today top news).
+                    - Avoid repetition in the questions.
+                    - Phrase each question clearly and concisely.
+                    - Language must same as the topic.
+
+                    Output format use JSON as follows:
                     {
                         "results": [
                             {
