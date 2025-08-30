@@ -217,7 +217,7 @@ app.post('/task-resources', async (c) => {
                     Requirements:
                     - Phrase each question clearly and concisely.
                     - Language must same as the topic.
-                    - Result format same as json below but add score key.
+                    - Result format same as json below.
 
                     {
                         "content_text": "a comprehensive explanation of the topic"
