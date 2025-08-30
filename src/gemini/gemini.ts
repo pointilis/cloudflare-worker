@@ -217,7 +217,7 @@ app.post('/task-resources', async (c) => {
                     Requirements:
                     - Phrase each question clearly and concisely.
                     - Language must same as the topic.
-                    - Return result as rich text like ckeditor.
+                    - Use markdown syntax for the response.
                 `,
             },
         ]
