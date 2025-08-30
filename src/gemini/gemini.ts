@@ -228,15 +228,13 @@ app.post('/task-resources', async (c) => {
     });
 
     const aiResponse = response.text;  
-    console.log('ai response', aiResponse);
-    
     if (!aiResponse) {
-        return c.json({ error: 'No response from AI' }, 500);
+        return c.json({ error: 'No response from AI', response: aiResponse }, 500);
     }
 
     const jsonResponse = extractJsonFromResponse(aiResponse);
     if (!jsonResponse) {
-        return c.json({ error: 'Invalid JSON response from AI' }, 500);
+        return c.json({ error: 'Invalid JSON response from AI', response: aiResponse }, 500);
     }
 
     return c.json({ message: 'Open ended questions scoring successfully', results: jsonResponse });
