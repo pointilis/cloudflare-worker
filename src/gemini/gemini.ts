@@ -11,7 +11,6 @@ const app = new Hono<{ Bindings: Bindings }>();
 
 // Endpoint to generate MCQs
 app.post('/mcq-generator', async (c) => {
-    console.log(c.env)
     const ai = new GoogleGenAI({
         apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
     });
@@ -133,7 +132,12 @@ app.post('/essay-scoring', async (c) => {
                 text: `
                     You're is judging on open ended question. 
                     Analyzing this question and answer then provide a score from 1 to 10.
-                    Result format same as json below but add score key.
+                    
+                    Requirements:
+                    - Phrase each question clearly and concisely.
+                    - Language must same as the topic.
+                    - Result format same as json below but add score key.
+
                     ${JSON.stringify(context)}
                 `,
             },
@@ -155,7 +159,6 @@ app.post('/essay-scoring', async (c) => {
 
 // Endpoint to generate Todos
 app.post('/todos-generator', async (c) => {
-    console.log(c.env)
     const ai = new GoogleGenAI({
         apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
     });
@@ -193,6 +196,50 @@ app.post('/todos-generator', async (c) => {
     }
 
     return c.json({ message: 'Todos generated successfully', todos: jsonResponse.todos });
+});
+
+// Task resource allocation endpoint
+app.post('/task-resources', async (c) => {
+    const ai = new GoogleGenAI({
+        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+    });
+    
+    const body = await c.req.json();
+    const { context } = body;
+    const response = await ai.models.generateContent({
+        model: 'gemini-2.5-flash',
+        contents: [
+            {
+                text: `
+                    You're is expert in software engineering. 
+                    Explain with deep comprehension about topic: ${context}.
+
+                    Requirements:
+                    - Phrase each question clearly and concisely.
+                    - Language must same as the topic.
+                    - Result format same as json below but add score key.
+
+                    {
+                        "content": {
+                            "text": "What is the capital of France?"
+                        }
+                    }
+                `,
+            },
+        ]
+    });
+
+    const aiResponse = response.text;  
+    if (!aiResponse) {
+        return c.json({ error: 'No response from AI' }, 500);
+    }
+
+    const jsonResponse = extractJsonFromResponse(aiResponse);
+    if (!jsonResponse) {
+        return c.json({ error: 'Invalid JSON response from AI' }, 500);
+    }
+
+    return c.json({ message: 'Open ended questions scoring successfully', results: jsonResponse });
 });
 
 export default app;
