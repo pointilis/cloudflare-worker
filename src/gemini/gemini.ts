@@ -228,6 +228,8 @@ app.post('/task-resources', async (c) => {
     });
 
     const aiResponse = response.text;  
+    console.log('ai response', aiResponse);
+    
     if (!aiResponse) {
         return c.json({ error: 'No response from AI' }, 500);
     }
