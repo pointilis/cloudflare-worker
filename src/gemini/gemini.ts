@@ -228,13 +228,14 @@ app.post('/task-resources', async (c) => {
     });
 
     const aiResponse = response.text;  
-    if (!aiResponse) {
-        return c.json({ error: 'No response from AI', response: aiResponse }, 500);
-    }
 
-    const jsonResponse = extractJsonFromResponse(aiResponse);
-    if (!jsonResponse) {
-        return c.json({ error: 'Invalid JSON response from AI', response: aiResponse }, 500);
+    try {
+        const jsonResponse = extractJsonFromResponse(aiResponse as string);
+        if (!jsonResponse) {
+            return c.json({ error: 'Invalid JSON response from AI', response: aiResponse }, 500);
+        }
+    } catch (error) {
+        return c.json({ error: 'Error processing AI response', response: aiResponse }, 500);
     }
 
     return c.json({ message: 'Open ended questions scoring successfully', results: jsonResponse });
