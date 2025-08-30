@@ -201,7 +201,7 @@ app.post('/todos-generator', async (c) => {
 // Task resource allocation endpoint
 app.post('/task-resources', async (c) => {
     const ai = new GoogleGenAI({
-        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
+        apiKey: 'AIzaSyDX1uWD3tvf1isDRHcQu1_p6U_7IgiIri4', // Replace with your Google GenAI API key
     });
     
     const body = await c.req.json();
@@ -220,9 +220,7 @@ app.post('/task-resources', async (c) => {
                     - Result format same as json below but add score key.
 
                     {
-                        "content": {
-                            "text": "What is the capital of France?"
-                        }
+                        "content_text": "a comprehensive explanation of the topic"
                     }
                 `,
             },
