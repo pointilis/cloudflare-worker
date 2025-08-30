@@ -228,9 +228,10 @@ app.post('/task-resources', async (c) => {
     });
 
     const aiResponse = response.text;  
+    let jsonResponse = null;
 
     try {
-        const jsonResponse = extractJsonFromResponse(aiResponse as string);
+        jsonResponse = extractJsonFromResponse(aiResponse as string);
         if (!jsonResponse) {
             return c.json({ error: 'Invalid JSON response from AI', response: aiResponse }, 500);
         }
