@@ -218,6 +218,7 @@ app.post('/task-resources', async (c) => {
                     - Phrase each question clearly and concisely.
                     - Language must same as the topic.
                     - Use markdown syntax for the response.
+                    - Eliminate jargon like "as a software engineer" at the beginning or similar phrases.
                 `,
             },
         ]
