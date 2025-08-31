@@ -24,9 +24,11 @@ app.post('/mcq-generator', async (c) => {
                 text: `
                     Generate ${num}-question with the type is **multiple-choice** based on the topic of **${context}**.
 
-                    Rules:
+                    Requirements:
                     - Difficulty level: ${difficulty}.
                     - Each question must have 1 correct answer and 3 incorrect but plausible distractors.
+                    - Options ID must char (a, b, c, d, etc.).
+                    - Correct answer must be one of the options provided with ID.
                     - Vary the subtopics: (search on internet today top news).
                     - Avoid repetition in the questions.
                     - Phrase each question clearly and concisely.
