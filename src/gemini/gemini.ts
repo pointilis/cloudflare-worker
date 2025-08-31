@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, Type } from "@google/genai";
 import { extractJsonFromResponse } from "../helpers";
 
 type Bindings = {
@@ -22,9 +22,9 @@ app.post('/mcq-generator', async (c) => {
         contents: [
             {
                 text: `
-                    Create a ${num}-question multiple-choice quiz on the topic of **${context}**.
+                    Generate ${num}-question with the type is **multiple-choice** based on the topic of **${context}**.
 
-                    Requirements:
+                    Rules:
                     - Difficulty level: ${difficulty}.
                     - Each question must have 1 correct answer and 3 incorrect but plausible distractors.
                     - Vary the subtopics: (search on internet today top news).
@@ -32,28 +32,34 @@ app.post('/mcq-generator', async (c) => {
                     - Phrase each question clearly and concisely.
                     - Give each question a point value from 1 to 10.
                     - Make sure the correct answer randomize it's position in the options.
-                    - Language must same as the topic.
-
-
-                    Output format use JSON as follows:
-                    {
-                        "questions": [
-                            {
-                                "question": "What is the capital of France?",
-                                "options": [
-                                    {"id": "A", "value": "Berlin"},
-                                    {"id": "B", "value": "Madrid"},
-                                    {"id": "C", "value": "Paris"},
-                                    {"id": "D", "value": "Rome"}
-                                ],
-                                "pointValue": 5,
-                                "answer": "C"
-                            },
-                        ]
-                    }
+                    - Avoid duplication of questions.
+                    - The language of the response must be the same as language of the topic.
                 `,
             },
-        ]
+        ],
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.ARRAY,
+                items: {
+                    type: Type.OBJECT,
+                    properties: {
+                        question: { type: Type.STRING },
+                        options: {
+                            type: Type.ARRAY,
+                            items: {
+                                type: Type.OBJECT,
+                                properties: {
+                                    id: { type: Type.STRING },
+                                    value: { type: Type.STRING },
+                                },
+                            },
+                        },
+                        pointValue: { type: Type.NUMBER },
+                    }
+                }
+            }
+        }
     });
 
     const aiResponse = response.text;
@@ -66,7 +72,7 @@ app.post('/mcq-generator', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'MCQs generated successfully', questions: jsonResponse.questions });
+    return c.json({ message: 'MCQs generated successfully', questions: jsonResponse });
 });
 
 // Essay generation endpoint
@@ -82,26 +88,30 @@ app.post('/essay-generator', async (c) => {
         contents: [
             {
                 text: `
-                    Create a ${num}-question open-ended quiz on the topic of **${context}**.
+                    Generate ${num}-question with the type is **open-ended** based on the topic of **${context}**.
 
                     Requirements:
                     - Difficulty level: ${difficulty}.
                     - Vary the subtopics: (search on internet today top news).
                     - Avoid repetition in the questions.
                     - Phrase each question clearly and concisely.
-                    - Language must same as the topic.
-
-                    Output format use JSON as follows:
-                    {
-                        "results": [
-                            {
-                                "question": "What is the capital of France?",
-                            },
-                        ]
-                    }
+                    - Avoid duplication of questions.
+                    - The language of the response must be the same as language of the topic.
                 `,
             },
-        ]
+        ],
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.ARRAY,
+                items: {
+                    type: Type.OBJECT,
+                    properties: {
+                        question: { type: Type.STRING },
+                    }
+                }
+            }
+        }
     });
 
     const aiResponse = response.text;  
@@ -114,7 +124,7 @@ app.post('/essay-generator', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Open ended questions generated successfully', results: jsonResponse.results });
+    return c.json({ message: 'Open ended questions generated successfully', questions: jsonResponse });
 });
 
 // Essay scoring endpoint
