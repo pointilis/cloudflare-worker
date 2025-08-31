@@ -135,23 +135,36 @@ app.post('/essay-scoring', async (c) => {
     
     const body = await c.req.json();
     const { context } = body;
+    const question = context.question;
+    const answer = context.answer;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
-                    You're is judging on open ended question. 
-                    Analyzing this question and answer then provide a score from 1 to 10.
-                    
+                    You're is judging on open ended question. Analyzing this question and answer.
+
+                    Question: ${question}
+                    Answer: ${answer}
+
                     Requirements:
                     - Phrase each question clearly and concisely.
-                    - Language must same as the topic.
-                    - Result format same as json below but add score key.
-
-                    ${JSON.stringify(context)}
+                    - The language of the response must be the same as language of the topic.
+                    - Give a score from 1 to 10 based on the quality of the answer.
+                    - Don't forget to provide feedback on how to improve the answer.
                 `,
             },
-        ]
+        ],
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                    score: { type: Type.NUMBER },
+                    feedback: { type: Type.STRING },
+                }
+            }
+        }
     });
 
     const aiResponse = response.text;  
@@ -164,48 +177,7 @@ app.post('/essay-scoring', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Open ended questions scoring successfully', results: jsonResponse });
-});
-
-// Endpoint to generate Todos
-app.post('/todos-generator', async (c) => {
-    const ai = new GoogleGenAI({
-        apiKey: c.env.GOOGLE_GENAI_API_KEY, // Replace with your Google GenAI API key
-    });
-
-    const body = await c.req.json();
-    const { context } = body;
-    const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: [
-            {
-                text: `
-                    Make 15 todo list for beginner from topic: ${context}. 
-                    Response must use same language as the topic.
-                    Format the response use JSON as follows:
-                    {
-                        "todos": [
-                            {
-                                "task": "What is the capital of France?",
-                            },
-                        ]
-                    }
-                `,
-            },
-        ]
-    });
-
-    const aiResponse = response.text;
-    if (!aiResponse) {
-        return c.json({ error: 'No response from AI' }, 500);
-    }
-
-    const jsonResponse = extractJsonFromResponse(aiResponse);
-    if (!jsonResponse) {
-        return c.json({ error: 'Invalid JSON response from AI' }, 500);
-    }
-
-    return c.json({ message: 'Todos generated successfully', todos: jsonResponse.todos });
+    return c.json({ message: 'Open ended questions scoring successfully', result: jsonResponse });
 });
 
 // Task resource allocation endpoint
@@ -227,15 +199,35 @@ app.post('/task-resources', async (c) => {
                     Requirements:
                     - Phrase each question clearly and concisely.
                     - The language must be the same as the topic.
-                    - Use markdown syntax for the response.
+                    - Use markdown syntax for the response content.
                     - Eliminate jargon like "as a software engineer" at the beginning or similar phrases.
+                    - Don't forget give reading time estimation in minutes.
                 `,
             },
-        ]
+        ],
+        config: {
+            responseMimeType: 'application/json',
+            responseSchema: {
+                type: Type.OBJECT,
+                properties: {
+                    content: { type: Type.STRING },
+                    reading_time: { type: Type.NUMBER },
+                }
+            }
+        }
     });
 
-    const aiResponse = response.text;  
-    return c.json({ message: 'Open ended questions scoring successfully', result: aiResponse });
+    const aiResponse = response.text;
+    if (!aiResponse) {
+        return c.json({ error: 'No response from AI' }, 500);
+    }
+
+    const jsonResponse = extractJsonFromResponse(aiResponse);
+    if (!jsonResponse) {
+        return c.json({ error: 'Invalid JSON response from AI' }, 500);
+    }
+
+    return c.json({ message: 'Open ended questions scoring successfully', result: jsonResponse });
 });
 
 export default app;
