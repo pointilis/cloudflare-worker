@@ -55,6 +55,7 @@ app.post('/mcq-generator', async (c) => {
                                 },
                             },
                         },
+                        correctAnswer: { type: Type.STRING },
                         pointValue: { type: Type.NUMBER },
                     }
                 }
