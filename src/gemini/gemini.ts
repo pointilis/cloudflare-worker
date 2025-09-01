@@ -155,6 +155,7 @@ app.post('/essay-scoring', async (c) => {
                     - The language of the response must be the same as language of the topic.
                     - Give a score from 1 to 10 based on the quality of the answer.
                     - Don't forget to provide feedback on how to improve the answer.
+                    - Use markdown syntax for the feedback content.
                 `,
             },
         ],
