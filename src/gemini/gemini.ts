@@ -16,13 +16,14 @@ app.post('/mcq-generator', async (c) => {
     });
 
     const body = await c.req.json();
-    const { context, difficulty, lesson, num, user } = body;
+    const { context, difficulty, lesson, num, user, topic } = body;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
                     Generate ${num}-question with the type is **multiple-choice** based on the topic of **${context}**.
+                    Results should not be taken out of context: ${topic}.
 
                     Requirements:
                     - Difficulty level: ${difficulty}.
@@ -85,14 +86,15 @@ app.post('/essay-generator', async (c) => {
     });
     
     const body = await c.req.json();
-    const { context, difficulty, lesson, num, user  } = body;
+    const { context, difficulty, lesson, num, user, topic  } = body;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
                     Generate ${num}-question with the type is **open-ended** based on the topic of **${context}**.
-
+                    Results should not be taken out of context: ${topic}.
+                    
                     Requirements:
                     - Difficulty level: ${difficulty}.
                     - Vary the subtopics: (search on internet today top news).
