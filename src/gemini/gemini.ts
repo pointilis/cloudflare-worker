@@ -22,8 +22,8 @@ app.post('/mcq-generator', async (c) => {
         contents: [
             {
                 text: `
-                    Generate ${num}-question with the type is **multiple-choice** based on the topic of **${context}**.
-                    Results should not be taken out of context: ${topic}.
+                    Generate ${num}-question with the type is multiple-choice based on the topic: ${context}.
+                    Results should not be taken out of the main topic: ${topic}.
 
                     Requirements:
                     - Difficulty level: ${difficulty}.
@@ -37,6 +37,7 @@ app.post('/mcq-generator', async (c) => {
                     - Make sure the correct answer randomize it's position in the options.
                     - Avoid duplication of questions.
                     - The language of the response must be the same as language of the topic.
+                    - For syntax from programing language keep it same as the language. Don't translate it.
                 `,
             },
         ],
@@ -92,9 +93,9 @@ app.post('/essay-generator', async (c) => {
         contents: [
             {
                 text: `
-                    Generate ${num}-question with the type is **open-ended** based on the topic of **${context}**.
-                    Results should not be taken out of context: ${topic}.
-                    
+                    Generate ${num}-question with the type is open-ended based on the topic: ${context}.
+                    Results should not be taken out of the main topic: ${topic}.
+
                     Requirements:
                     - Difficulty level: ${difficulty}.
                     - Vary the subtopics: (search on internet today top news).
@@ -102,6 +103,7 @@ app.post('/essay-generator', async (c) => {
                     - Phrase each question clearly and concisely.
                     - Avoid duplication of questions.
                     - The language of the response must be the same as language of the topic.
+                    - For syntax from programing language keep it same as the language. Don't translate it.
                 `,
             },
         ],
@@ -200,7 +202,7 @@ app.post('/task-resources', async (c) => {
             {
                 text: `
                     You're is expert in study of topic: ${context}.
-                    Results should not be taken out of context: ${topic}.
+                    Results should not be taken out of the main topic: ${topic}.
                     Explain with deep comprehension about that.
 
                     Requirements:
@@ -209,6 +211,7 @@ app.post('/task-resources', async (c) => {
                     - Use markdown syntax for the response content.
                     - Eliminate jargon like "as a software engineer" at the beginning or similar phrases.
                     - Don't forget give reading time estimation in minutes.
+                    - For syntax from programing language keep it same as the language. Don't translate it.
                 `,
             },
         ],
