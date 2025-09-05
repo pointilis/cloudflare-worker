@@ -232,7 +232,7 @@ app.post('/task-resources', async (c) => {
         return c.json({ error: 'Invalid JSON response from AI' }, 500);
     }
 
-    return c.json({ message: 'Open ended questions scoring successfully', result: jsonResponse });
+    return c.json({ message: 'Resources allocated successfully', result: jsonResponse });
 });
 
 export default app;
