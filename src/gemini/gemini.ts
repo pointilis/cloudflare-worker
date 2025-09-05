@@ -191,13 +191,14 @@ app.post('/task-resources', async (c) => {
     });
     
     const body = await c.req.json();
-    const { context } = body;
+    const { context, topic } = body;
     const response = await ai.models.generateContent({
         model: 'gemini-2.5-flash',
         contents: [
             {
                 text: `
-                    You're is expert in study of topic: ${context}. 
+                    You're is expert in study of topic: ${context}.
+                    Results should not be taken out of context: ${topic}.
                     Explain with deep comprehension about that.
 
                     Requirements:
