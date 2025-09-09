@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import gemini from './gemini/gemini'
 import { cors } from 'hono/cors';
+import openai from './openai/openai';
 
 const app = new Hono()
 app.use(cors({
@@ -14,5 +15,6 @@ app.get('/', (c) => {
 });
 
 app.route('/api/gemini', gemini);
+app.route('/api/openai', openai);
 
-export default app
+export default app;
