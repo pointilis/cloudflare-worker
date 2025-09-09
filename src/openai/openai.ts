@@ -13,7 +13,7 @@ app.post('/generate-milestones', async (c) => {
     const { expertise_level, topic } = body;
 
     const client = new OpenAI({ apiKey: c.env.OPENAI_API_KEY });
-    const prompt = `Generate learning path with topic "{topic}" within 30 - 60 milestones for a ${expertise_level} learner.
+    const prompt = `Generate learning path with topic "${topic}" within 30 - 60 milestones for a ${expertise_level} learner.
 
 Rules:
     - Result must fully expanded 30 - 60 milestones.
