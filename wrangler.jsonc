@@ -6,7 +6,8 @@
   "compatibility_flags": ["nodejs_compat", "nodejs_compat_populate_process_env"],
   "vars": {
     "GOOGLE_GENAI_API_KEY": "",
-    "GOOGLE_SERVICE_ACCOUNT": ""
+    "GOOGLE_SERVICE_ACCOUNT": "",
+    "OPENAI_API_KEY": "",
   },
   // "kv_namespaces": [
   //   {
